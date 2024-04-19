@@ -356,5 +356,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bocks
       objectReference: {fileID: 0}
+    - target: {fileID: 778361031235157611, guid: 1e884c4439eba0a40be4caaf69ebea37, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 92ee49c2ccf01c945a2d3578ee7ecf44, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e884c4439eba0a40be4caaf69ebea37, type: 3}
