@@ -18,10 +18,9 @@ public class Throwable : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        Debug.Log(rb.velocity.magnitude);
         if (rb.velocity.magnitude > soundThreshold)
         {
-            Debug.Log("Collision!!!");
+            gameObject.GetComponent<Audible>().CreateSound(other.contacts[0].point, rb.velocity.magnitude);
         } 
     }
 }
