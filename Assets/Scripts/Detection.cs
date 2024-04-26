@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Detection : MonoBehaviour
 {
@@ -19,11 +20,14 @@ public class Detection : MonoBehaviour
     // Update is called once per frame
     void OnTriggerStay(Collider col)
     {
-        if (col.gameObject.tag == "Player")
+        if (col.gameObject.tag == "Enemy")
         {
             RaycastHit hit;
 
-            if (Physics.Raycast(Lens.transform.position, Vector3.forward, out hit, 1000, detection))
+            Vector3 directionToTarget = (col.transform.position - Lens.transform.position).normalized;
+
+            Debug.DrawRay(Lens.transform.position, directionToTarget);
+            if (Physics.Raycast(Lens.transform.position, directionToTarget, out hit, 1000, detection))
             {
                 Debug.Log(hit.collider.name);
 

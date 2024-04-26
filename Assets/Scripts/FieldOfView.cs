@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class FieldOfView : MonoBehaviour
 {
@@ -15,12 +16,39 @@ public class FieldOfView : MonoBehaviour
 
     public bool canSeePlayer;
 
+    private NavMeshAgent agent;
+
+    private bool playerDetected;
+
+    private Vector3 hunterOrigin;
+
     private void Start()
     {
         playerRef = GameObject.FindGameObjectWithTag("Player");
         StartCoroutine(FOVRoutine());
+        agent = GetComponent<NavMeshAgent>();
+        hunterOrigin = transform.position;
 
-
+    }
+    private void Update()
+    {
+        if (canSeePlayer & !playerDetected)
+        {
+            transform.LookAt(playerRef.transform.position);
+            StartCoroutine(DetectPlayer());
+        }
+        else if (!canSeePlayer)
+        {
+            playerDetected = false;
+        }
+        if (playerDetected)
+        {
+            MoveTo();
+        }
+        else
+        {
+            agent.destination = transform.position;
+        }
     }
     private IEnumerator FOVRoutine()
     {
@@ -41,8 +69,6 @@ public class FieldOfView : MonoBehaviour
             Transform target = rangeChecks[0].transform;
             Vector3 directionToTarget = (target.position - transform.position).normalized;
 
-            Debug.Log(Vector3.Angle(transform.forward, directionToTarget));
-
             if(Vector3.Angle(transform.forward, directionToTarget) < angle / 2)
             {
                 float distanceToTarget = Vector3.Distance(transform.position, target.position);
@@ -58,7 +84,6 @@ public class FieldOfView : MonoBehaviour
             }
             else
             {
-                Debug.Log("FAIL");
                 canSeePlayer = false;
             }
         }
@@ -66,5 +91,20 @@ public class FieldOfView : MonoBehaviour
         {
             canSeePlayer = false;
         }
+    }
+    private void MoveTo()
+    {
+        agent.destination = playerRef.transform.position;
+    }
+
+    private IEnumerator DetectPlayer()
+    {
+        WaitForSeconds wait = new WaitForSeconds(5f);
+        yield return wait;
+        if (canSeePlayer)
+        {
+            playerDetected = true;
+        }
+        yield return null;
     }
 }
