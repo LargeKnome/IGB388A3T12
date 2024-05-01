@@ -11,6 +11,11 @@ public class Detection : MonoBehaviour
 
     public LayerMask detection;
     Transform Lens;
+
+    public camRotation camRot;
+
+    public GameObject enemyReference;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -20,34 +25,41 @@ public class Detection : MonoBehaviour
     // Update is called once per frame
     void OnTriggerStay(Collider col)
     {
-        if (col.gameObject.tag == "Enemy")
+        if (col.gameObject.tag == "Player")
         {
             RaycastHit hit;
 
             Vector3 directionToTarget = (col.transform.position - Lens.transform.position).normalized;
 
-            Debug.DrawRay(Lens.transform.position, directionToTarget);
             if (Physics.Raycast(Lens.transform.position, directionToTarget, out hit, 1000, detection))
             {
                 Debug.Log(hit.collider.name);
 
-                if (hit.collider.tag == playerTag)
+                if (hit.collider.tag == "Player")
                 {
                     Lens.GetComponentInParent<MeshRenderer>().material = detect;
+                    camRot.detected = true;
+                    enemyReference.GetComponent<EnemyMovement>().MoveToCameraPos(hit.transform.position);
                 }
                 else
                 {
                     Lens.GetComponentInParent<MeshRenderer>().material = none;
+                    camRot.detected = false;
+
                 }
             }
             else
             {
                 Lens.GetComponentInParent<MeshRenderer>().material = none;
+                camRot.detected = false;
+
             }
         }
         else
         {
             Lens.GetComponentInParent<MeshRenderer>().material = none;
+            camRot.detected = false;
+
         }
     }
 }
