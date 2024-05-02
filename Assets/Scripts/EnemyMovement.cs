@@ -1,4 +1,5 @@
 using Oculus.Platform;
+using Oculus.Platform.Samples.VrHoops;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,11 +18,17 @@ public class EnemyMovement : MonoBehaviour
 
     public bool camAlert = false;
 
+    private GameObject playerRef;
+
+    private Vector3 CamAlertPos;
+
     // Start is called before the first frame update
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         LocNum = 0;
+        playerRef = GameObject.FindGameObjectWithTag("Player");
+
     }
 
     // Update is called once per frame
@@ -29,7 +36,7 @@ public class EnemyMovement : MonoBehaviour
     {
         if (!camAlert)
         {
-            detected = GetComponent<FieldOfView>().canSeePlayer;
+            detected = GetComponent<FieldOfView>().playerDetected;
             if (!detected)
             {
                 if (Destinations.Length != 0)
@@ -46,6 +53,21 @@ public class EnemyMovement : MonoBehaviour
                 }
             }
         }
+        else
+        {
+            if ((agent.transform.position - CamAlertPos).magnitude < 1f)
+            {
+                StartCoroutine(LookAround());
+            }
+        }
+        if (GetComponent<FieldOfView>().canSeePlayer)
+        {
+            agent.destination = transform.position;
+        }
+    }
+    public void MoveTo()
+    {
+        agent.destination = playerRef.transform.position;
     }
     public IEnumerator Wait()
     {
@@ -66,10 +88,7 @@ public class EnemyMovement : MonoBehaviour
     {
         camAlert = true;
         agent.destination = CameraPos;
-        if ((agent.transform.position - Destinations[LocNum].position).magnitude < 1f)
-        {
-            StartCoroutine(LookAround());
-        }
+        CamAlertPos = CameraPos;
     }
     public IEnumerator LookAround()
     {

@@ -43,7 +43,7 @@ public class FieldOfView : MonoBehaviour
         }
         if (playerDetected)
         {
-            MoveTo();
+            GetComponent<EnemyMovement>().MoveTo();
         }
     }
     private IEnumerator FOVRoutine()
@@ -71,7 +71,6 @@ public class FieldOfView : MonoBehaviour
 
                 if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstructionMask))
                 {
-                    Debug.Log("CANSEE");
                     canSeePlayer = true;
                     GetComponent<EnemyMovement>().camAlert = false;
                 }
@@ -89,10 +88,6 @@ public class FieldOfView : MonoBehaviour
         {
             canSeePlayer = false;
         }
-    }
-    private void MoveTo()
-    {
-        agent.destination = playerRef.transform.position;
     }
 
     private IEnumerator DetectPlayer()

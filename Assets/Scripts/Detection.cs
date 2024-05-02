@@ -23,7 +23,7 @@ public class Detection : MonoBehaviour
     }
 
     // Update is called once per frame
-    void OnTriggerStay(Collider col)
+    void OnTriggerEnter(Collider col)
     {
         if (col.gameObject.tag == "Player")
         {
@@ -33,8 +33,6 @@ public class Detection : MonoBehaviour
 
             if (Physics.Raycast(Lens.transform.position, directionToTarget, out hit, 1000, detection))
             {
-                Debug.Log(hit.collider.name);
-
                 if (hit.collider.tag == "Player")
                 {
                     Lens.GetComponentInParent<MeshRenderer>().material = detect;
@@ -55,11 +53,13 @@ public class Detection : MonoBehaviour
 
             }
         }
-        else
+    }
+    private void OnTriggerExit(Collider col)
+    {
+        if (col.gameObject.tag == "Player")
         {
             Lens.GetComponentInParent<MeshRenderer>().material = none;
             camRot.detected = false;
-
         }
     }
 }
