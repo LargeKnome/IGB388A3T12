@@ -5,9 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - SamplesInfoPanel
-  - Hand
-  - Ticket
-  - Throwable
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -16,9 +14,9 @@ TagManager:
   - Water
   - UI
   - InteractableObject
-  - ListenerObject
-  - 
-  - 
+  - Player
+  - Obstuction
+  - Test
   - 
   - 
   - 
