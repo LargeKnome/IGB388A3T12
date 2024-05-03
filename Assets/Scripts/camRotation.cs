@@ -73,7 +73,6 @@ public class camRotation : MonoBehaviour
         {
             if (!detected)
             {
-                Debug.Log("TESTING");
                 timer += Time.deltaTime;
                 transform.rotation = intialRotation * Quaternion.AngleAxis(timer / duration * yaw, Vector3.up);
                 yield return null;

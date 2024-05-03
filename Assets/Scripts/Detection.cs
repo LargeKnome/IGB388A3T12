@@ -7,6 +7,8 @@ public class Detection : MonoBehaviour
 {
     public Material detect;
     public Material none;
+    public Material detectSpotlight;
+    public Material noneSpotlightLight;
     string playerTag;
 
     public LayerMask detection;
@@ -36,12 +38,14 @@ public class Detection : MonoBehaviour
                 if (hit.collider.tag == "Player")
                 {
                     Lens.GetComponentInParent<MeshRenderer>().material = detect;
+                    GetComponent<MeshRenderer>().material = detectSpotlight;
                     camRot.detected = true;
                     enemyReference.GetComponent<EnemyMovement>().MoveToCameraPos(hit.transform.position);
                 }
                 else
                 {
                     Lens.GetComponentInParent<MeshRenderer>().material = none;
+                    GetComponent<MeshRenderer>().material = noneSpotlightLight;
                     camRot.detected = false;
 
                 }
@@ -49,6 +53,7 @@ public class Detection : MonoBehaviour
             else
             {
                 Lens.GetComponentInParent<MeshRenderer>().material = none;
+                GetComponent<MeshRenderer>().material = noneSpotlightLight;
                 camRot.detected = false;
 
             }
@@ -59,6 +64,7 @@ public class Detection : MonoBehaviour
         if (col.gameObject.tag == "Player")
         {
             Lens.GetComponentInParent<MeshRenderer>().material = none;
+            GetComponent<MeshRenderer>().material = noneSpotlightLight;
             camRot.detected = false;
         }
     }

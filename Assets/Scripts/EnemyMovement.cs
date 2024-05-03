@@ -22,6 +22,8 @@ public class EnemyMovement : MonoBehaviour
 
     private Vector3 CamAlertPos;
 
+    public Canvas gameOver;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -95,5 +97,12 @@ public class EnemyMovement : MonoBehaviour
         yield return new WaitForSeconds(3f);
         camAlert = false;
 
+    }
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.transform.tag == "Player")
+        {
+            gameOver.enabled = true;
+        }
     }
 }
