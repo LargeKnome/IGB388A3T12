@@ -14,22 +14,49 @@ public class camRotation : MonoBehaviour
     public float rotationSec;
 
     public float rotationFlip;
+
+    public bool detected;
+
+    private GameObject playerRef;
+
+    private bool Resetcam = false;
+
+    private Quaternion camRot;
     // Start is called before the first frame update
     void Start()
     {
+        playerRef = GameObject.FindWithTag("Player");
         cam = transform.GetChild(0);
+        camRot = cam.rotation;
         cam.localRotation = Quaternion.AngleAxis(pitch, Vector3.right);
         SetUpStartRotation();
     }
     private void Update()
     {
-        if(startNext && rotateRight)
+        if (!detected)
         {
-            StartCoroutine(Rotate(yaw, rotationSec));
+            if (Resetcam)
+            {
+                startNext = true;
+                rotateRight = false;
+                cam.rotation = camRot;
+                cam.localRotation = Quaternion.AngleAxis(pitch, Vector3.right);
+                SetUpStartRotation(); 
+                Resetcam = false;
+            }
+            if (startNext && rotateRight)
+            {
+                StartCoroutine(Rotate(yaw, rotationSec));
+            }
+            else if (startNext && !rotateRight)
+            {
+                StartCoroutine(Rotate(-yaw, rotationSec));
+            }
         }
-        else if (startNext && !rotateRight)
+        else
         {
-            StartCoroutine(Rotate(-yaw, rotationSec));
+            cam.transform.LookAt(playerRef.transform.position);
+            Resetcam = true;
         }
     }
 
@@ -42,11 +69,18 @@ public class camRotation : MonoBehaviour
 
         float timer = 0f;
 
-        while(timer < duration)
+        while (timer < duration)
         {
-            timer += Time.deltaTime;
-            transform.rotation = intialRotation * Quaternion.AngleAxis(timer / duration * yaw, Vector3.up);
-            yield return null;
+            if (!detected)
+            {
+                timer += Time.deltaTime;
+                transform.rotation = intialRotation * Quaternion.AngleAxis(timer / duration * yaw, Vector3.up);
+                yield return null;
+            }
+            else
+            {
+                yield break;
+            }
         }
 
         yield return new WaitForSeconds(rotationFlip);
