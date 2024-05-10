@@ -180,3 +180,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   camAlert: 0
+  gameOver: {fileID: 0}
+  rotDuration: 3
+  rotYaw: 45
+  rotate: 60
+  searchingTime: 10
