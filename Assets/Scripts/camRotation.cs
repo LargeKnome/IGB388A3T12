@@ -22,6 +22,10 @@ public class camRotation : MonoBehaviour
     private bool Resetcam = false;
 
     private Quaternion camRot;
+
+    private Quaternion startRotation;
+    private Quaternion endRotation;
+    private Quaternion targetRotation;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,8 +33,12 @@ public class camRotation : MonoBehaviour
         cam = transform.GetChild(0);
         camRot = cam.rotation;
         cam.localRotation = Quaternion.AngleAxis(pitch, Vector3.right);
-        SetUpStartRotation();
-    }
+        startRotation = Quaternion.Euler(Vector3.up * yaw);
+        Debug.Log(startRotation.y);
+        endRotation = Quaternion.Euler(Vector3.up * -yaw);
+        targetRotation = endRotation;
+/*        SetUpStartRotation();
+*/    }
     private void Update()
     {
         if (!detected)
@@ -41,17 +49,29 @@ public class camRotation : MonoBehaviour
                 rotateRight = false;
                 cam.rotation = camRot;
                 cam.localRotation = Quaternion.AngleAxis(pitch, Vector3.right);
-                SetUpStartRotation(); 
-                Resetcam = false;
+/*                SetUpStartRotation();
+*/                Resetcam = false;
             }
-            if (startNext && rotateRight)
+            transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation, rotationSec * Time.deltaTime);
+            if (Quaternion.Angle(transform.localRotation, targetRotation) < 0.1f)
             {
-                StartCoroutine(Rotate(yaw, rotationSec));
+                if (targetRotation == endRotation)
+                {
+                    targetRotation = startRotation;
+                }
+                else
+                {
+                    targetRotation = endRotation;
+                }
             }
-            else if (startNext && !rotateRight)
-            {
-                StartCoroutine(Rotate(-yaw, rotationSec));
-            }
+            /*            if (startNext && rotateRight)
+                        {
+                            StartCoroutine(Rotate(yaw, rotationSec));
+                        }
+                        else if (startNext && !rotateRight)
+                        {
+                            StartCoroutine(Rotate(-yaw, rotationSec));
+                        }*/
         }
         else
         {

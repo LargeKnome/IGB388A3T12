@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UIElements;
 
 public class EnemyMovement : MonoBehaviour
 {
@@ -24,9 +25,25 @@ public class EnemyMovement : MonoBehaviour
 
     public Canvas gameOver;
 
+    public float rotDuration;
+    public float rotYaw;
+
+    public float rotate;
+
+    private bool isSearching = false;
+
+    public float searchingTime;
+
+    private Quaternion startRotation;
+    private Quaternion endRotation;
+    private Quaternion targetRotation;
+
     // Start is called before the first frame update
     void Start()
     {
+        startRotation = Quaternion.Euler(Vector3.up * rotate);
+        endRotation = Quaternion.Euler(Vector3.up * -rotate);
+        targetRotation = startRotation;
         agent = GetComponent<NavMeshAgent>();
         LocNum = 0;
         playerRef = GameObject.FindGameObjectWithTag("Player");
@@ -36,6 +53,10 @@ public class EnemyMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isSearching)
+        {
+            Search();
+        }
         if (!camAlert)
         {
             detected = GetComponent<FieldOfView>().playerDetected;
@@ -94,9 +115,26 @@ public class EnemyMovement : MonoBehaviour
     }
     public IEnumerator LookAround()
     {
-        yield return new WaitForSeconds(3f);
+        isSearching = true;
+        yield return new WaitForSeconds(searchingTime);
+        isSearching = false;
         camAlert = false;
 
+    }
+    public void Search()
+    {
+        transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation, 2 * Time.deltaTime);
+        if (Quaternion.Angle(transform.localRotation, targetRotation) < 0.1f)
+        {
+            if (targetRotation == endRotation)
+            {
+                targetRotation = startRotation;
+            }
+            else
+            {
+                targetRotation = endRotation;
+            }
+        }
     }
     public void OnTriggerEnter(Collider other)
     {
