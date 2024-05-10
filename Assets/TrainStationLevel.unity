@@ -1843,6 +1843,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 8949509329904859158, guid: 0c587e36956b0a345804806b1e2012fc, type: 3}
+      propertyPath: enemyReference
+      value: 
+      objectReference: {fileID: 1505852480}
+    - target: {fileID: 8949509329904859158, guid: 0c587e36956b0a345804806b1e2012fc, type: 3}
       propertyPath: detectSpotlight
       value: 
       objectReference: {fileID: 2100000, guid: 690c241aa4f4b484096bbeb0af9ba2a7, type: 2}
@@ -3720,6 +3724,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1463035291}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1505852480 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6400784806548601278, guid: 8bb873059b7c2934089ad89f73d15692, type: 3}
+  m_PrefabInstance: {fileID: 168567487}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1507016176
 GameObject:
   m_ObjectHideFlags: 0
