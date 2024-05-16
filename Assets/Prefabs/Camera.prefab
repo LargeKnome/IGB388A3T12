@@ -210,6 +210,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detect: {fileID: 2100000, guid: 771195419e73f004787f52c6dd418af9, type: 2}
   none: {fileID: 2100000, guid: f7771d159d4858544ba38ab70dd5905d, type: 2}
+  detectSpotlight: {fileID: 2100000, guid: 690c241aa4f4b484096bbeb0af9ba2a7, type: 2}
+  noneSpotlightLight: {fileID: 2100000, guid: b68e7d9ca42c7a14b85751ca7412d2a9, type: 2}
   detection:
     serializedVersion: 2
     m_Bits: 640
