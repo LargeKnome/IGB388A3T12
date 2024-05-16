@@ -6,10 +6,12 @@ public class FOVEditor : Editor
 {
     private void OnSceneGUI()
     {
+        //Display Zone
         FieldOfView fov = (FieldOfView) target;
         Handles.color = Color.white;
         Handles.DrawWireArc(fov.transform.position, Vector3.up, Vector3.forward, 360, fov.radius);
 
+        //Display Field
         Vector3 viewAngle01 = DirectionFromAngle(fov.transform.eulerAngles.y, -fov.angle / 2);
         Vector3 viewAngle02 = DirectionFromAngle(fov.transform.eulerAngles.y, fov.angle / 2);
 

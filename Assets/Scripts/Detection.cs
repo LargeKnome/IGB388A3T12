@@ -16,11 +16,12 @@ public class Detection : MonoBehaviour
 
     public camRotation camRot;
 
-    public GameObject enemyReference;
+    private GameObject[] enemyReferences;
     
     // Start is called before the first frame update
     void Start()
     {
+        enemyReferences = GameObject.FindGameObjectsWithTag("Enemy");
         Lens = transform.parent.GetComponent<Transform>();
     }
 
@@ -40,7 +41,9 @@ public class Detection : MonoBehaviour
                     Lens.GetComponentInParent<MeshRenderer>().material = detect;
                     GetComponent<MeshRenderer>().material = detectSpotlight;
                     camRot.detected = true;
-                    enemyReference.GetComponent<EnemyMovement>().MoveToCameraPos(hit.transform.position);
+                    GameObject closestEnemy = FindClosestEnemy(hit);
+                    closestEnemy.GetComponent<EnemyMovement>().MoveToCameraPos(hit.transform.position);
+
                 }
                 else
                 {
@@ -58,6 +61,23 @@ public class Detection : MonoBehaviour
 
             }
         }
+    }
+    private GameObject FindClosestEnemy(RaycastHit hit)
+    {
+        GameObject closestObject = null;
+        float closestDistance = Mathf.Infinity;
+
+        foreach (GameObject obj in enemyReferences)
+        {
+            float distance = Vector3.Distance(hit.transform.position, obj.transform.position);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestObject = obj;
+            }
+        }
+
+        return closestObject;
     }
     private void OnTriggerExit(Collider col)
     {
