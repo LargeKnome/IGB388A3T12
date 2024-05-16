@@ -4,7 +4,10 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/TomScene.unity
+    guid: 7858c57ae2dc8e4409fe2841b194d211
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 7d51d9b6748e5c645bee5c72b063900f, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: dcd3a6b311f84ff43b4b5b08d91ac191, type: 2}
