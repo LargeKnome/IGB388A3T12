@@ -25,7 +25,6 @@ public class FieldOfView : MonoBehaviour
     public int rayCount = 36;
 
     public int resolution = 50;     // Number of points used to draw the FOV
-    private LineRenderer lineRenderer;
 
 
     private Mesh mesh;
@@ -38,11 +37,9 @@ public class FieldOfView : MonoBehaviour
     private void Start()
     {
         mesh = new Mesh();
-        Debug.Log(detection.gameObject);
+        Debug.Log(gameObject.name);
         detection.mesh = mesh;
 
-        lineRenderer = GetComponent<LineRenderer>();
-        lineRenderer.positionCount = resolution + 1;
 
         playerRef = GameObject.FindGameObjectWithTag("Player");
         StartCoroutine(FOVRoutine());
@@ -53,7 +50,7 @@ public class FieldOfView : MonoBehaviour
     private void Update()
     {
         DrawFOV();
-        if (canSeePlayer & !playerDetected)
+/*        if (canSeePlayer & !playerDetected)
         {
             transform.LookAt(playerRef.transform.position);
             StartCoroutine(DetectPlayer());
@@ -65,7 +62,7 @@ public class FieldOfView : MonoBehaviour
         if (playerDetected)
         {
             GetComponent<EnemyMovement>().MoveTo();
-        }
+        }*/
     }
     private IEnumerator FOVRoutine()
     {
@@ -94,8 +91,8 @@ public class FieldOfView : MonoBehaviour
                 {
                     detection.GetComponent<MeshRenderer>().material = Detected;
                     canSeePlayer = true;
-                    GetComponent<EnemyMovement>().camAlert = false;
-                }
+/*                    GetComponent<EnemyMovement>().camAlert = false;
+*/                }
                 else
                 {
                     detection.GetComponent<MeshRenderer>().material = NotDetected;
@@ -115,15 +112,32 @@ public class FieldOfView : MonoBehaviour
         }
     }
 
+    public void DetectingPlayer()
+    {
+        StartCoroutine(DetectPlayer());
+    }
+
     private IEnumerator DetectPlayer()
     {
-        WaitForSeconds wait = new WaitForSeconds(5f);
+        float elaspedTime = 0f;
+        while (elaspedTime < 5f)
+        {
+            if (!canSeePlayer)
+            {
+                yield break;
+            }
+            elaspedTime += Time.deltaTime;
+            yield return null;
+        }
+        playerDetected = true;
+        yield return null;
+/*        WaitForSeconds wait = new WaitForSeconds(5f);
         yield return wait;
         if (canSeePlayer)
         {
             playerDetected = true;
         }
-        yield return null;
+        yield return null;*/
     }
     void DrawFOV()
     {

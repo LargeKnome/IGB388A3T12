@@ -42,7 +42,7 @@ public class Detection : MonoBehaviour
                     GetComponent<MeshRenderer>().material = detectSpotlight;
                     camRot.detected = true;
                     GameObject closestEnemy = FindClosestEnemy(hit);
-                    closestEnemy.GetComponent<EnemyMovement>().MoveToCameraPos(hit.transform.position);
+                    closestEnemy.GetComponent<Hunter>().MoveToCameraPos(hit.transform.position);
 
                 }
                 else

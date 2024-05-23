@@ -113,6 +113,10 @@ public class EnemyMovement : MonoBehaviour
         agent.destination = CameraPos;
         CamAlertPos = CameraPos;
     }
+    public void Looking()
+    {
+        StartCoroutine(LookAround());
+    }
     public IEnumerator LookAround()
     {
         isSearching = true;
