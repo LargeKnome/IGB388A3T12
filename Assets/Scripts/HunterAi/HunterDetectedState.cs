@@ -1,6 +1,7 @@
 using Oculus.Platform.Samples.VrHoops;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class HunterDetectedState : BaseState
@@ -26,7 +27,7 @@ public class HunterDetectedState : BaseState
     {
         base.UpdateLogic();
         var targetRotation = Quaternion.LookRotation(hunter.player.transform.position - hunter.transform.position);
-
+        targetRotation.y = hunter.transform.rotation.y;
         // Smoothly rotate towards the target point.
         hunter.transform.rotation = Quaternion.Slerp(hunter.transform.rotation, targetRotation, 5 * Time.deltaTime);
         if (hunter.GetComponent<FieldOfView>().playerDetected)

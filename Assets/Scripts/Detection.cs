@@ -1,3 +1,4 @@
+using Oculus.Platform.Samples.VrHoops;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,10 @@ public class Detection : MonoBehaviour
     public camRotation camRot;
 
     private GameObject[] enemyReferences;
+
+    private GameObject player;
+
+    private float distance;
     
     // Start is called before the first frame update
     void Start()
@@ -26,6 +31,14 @@ public class Detection : MonoBehaviour
         light.color = noneSpotlightLight.color;
         enemyReferences = GameObject.FindGameObjectsWithTag("Enemy");
         Lens = transform.parent.GetComponent<Transform>();
+        player = GameObject.FindGameObjectWithTag("Player");
+        distance = Vector3.Distance(player.transform.position, Lens.transform.position);
+
+    }
+    private void Update()
+    {
+        distance = Vector3.Distance(player.transform.position, Lens.transform.position);
+
     }
 
     // Update is called once per frame
@@ -36,7 +49,6 @@ public class Detection : MonoBehaviour
             RaycastHit hit;
 
             Vector3 directionToTarget = (col.transform.position - Lens.transform.position).normalized;
-            float distance = Vector3.Distance(col.transform.position, Lens.transform.position);
             if (!Physics.Raycast(Lens.transform.position, directionToTarget, out hit, distance, obstruction))
             {
                 if (Physics.Raycast(Lens.transform.position, directionToTarget, out hit, 1000, detection))
