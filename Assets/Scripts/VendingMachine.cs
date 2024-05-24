@@ -6,7 +6,7 @@ public class VendingMachine : MonoBehaviour
 {
     [SerializeField] private Transform startPos;
     [SerializeField] private GameObject toSpawn;
-    [SerializeField] private float laucnhForce;
+    [SerializeField] private float launchForce;
     [SerializeField] private float spawnDelay = .5f;
 
     private bool canSpawn = true;
@@ -19,7 +19,7 @@ public class VendingMachine : MonoBehaviour
         }
         
         GameObject newGameObject = Instantiate(toSpawn, startPos.position, startPos.rotation);
-        newGameObject.GetComponent<Rigidbody>().AddForce(newGameObject.transform.forward * laucnhForce);
+        newGameObject.GetComponent<Rigidbody>().AddForce(newGameObject.transform.forward * launchForce);
         StartCoroutine(SpawnDelayFunc());
     }
 

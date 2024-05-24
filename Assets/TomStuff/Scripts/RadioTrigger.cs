@@ -6,13 +6,12 @@ using UnityEngine;
 
 public class RadioTrigger : MonoBehaviour
 {
-    [SerializeField] private AudioClip _clip;
-
+    [SerializeField] private HelpPoint _helpPoint;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            Radio.i.PlayAudio(_clip);
+            _helpPoint.PlayAudio();
             gameObject.SetActive(false);
         }
     }
