@@ -12,19 +12,18 @@ public class HunterRunningState : BaseState
     {
         base.Enter();
         hunter.agent.enabled = true;
-        hunter.agent.destination = hunter.player.transform.position;
     }
 
     public override void Exit()
     {
         base.Exit();
         hunter.GetComponent<FieldOfView>().playerDetected = false;
-        stateMachine.ChangeState(hunter.idleState);
     }
 
     public override void UpdateLogic()
     {
         base.UpdateLogic();
+        hunter.agent.destination = hunter.player.transform.position;
         if (hunter.GetComponent<FieldOfView>() != null)
         {
             if (!hunter.GetComponent<FieldOfView>().canSeePlayer)
