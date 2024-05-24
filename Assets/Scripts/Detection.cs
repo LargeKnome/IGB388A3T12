@@ -5,11 +5,12 @@ using static UnityEngine.GraphicsBuffer;
 
 public class Detection : MonoBehaviour
 {
-    public Material detect;
-    public Material none;
+    public Light light;
     public Material detectSpotlight;
     public Material noneSpotlightLight;
     string playerTag;
+
+    public LayerMask obstruction;
 
     public LayerMask detection;
     Transform Lens;
@@ -21,6 +22,8 @@ public class Detection : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        light = GetComponent<Light>();
+        light.color = noneSpotlightLight.color;
         enemyReferences = GameObject.FindGameObjectsWithTag("Enemy");
         Lens = transform.parent.GetComponent<Transform>();
     }
@@ -33,32 +36,35 @@ public class Detection : MonoBehaviour
             RaycastHit hit;
 
             Vector3 directionToTarget = (col.transform.position - Lens.transform.position).normalized;
-
-            if (Physics.Raycast(Lens.transform.position, directionToTarget, out hit, 1000, detection))
+            float distance = Vector3.Distance(col.transform.position, Lens.transform.position);
+            if (!Physics.Raycast(Lens.transform.position, directionToTarget, out hit, distance, obstruction))
             {
-                if (hit.collider.tag == "Player")
+                if (Physics.Raycast(Lens.transform.position, directionToTarget, out hit, 1000, detection))
                 {
-                    Lens.GetComponentInParent<MeshRenderer>().material = detect;
-                    GetComponent<MeshRenderer>().material = detectSpotlight;
-                    camRot.detected = true;
-                    GameObject closestEnemy = FindClosestEnemy(hit);
-                    closestEnemy.GetComponent<Hunter>().MoveToCameraPos(hit.transform.position);
+                    if (hit.collider.tag == "Player")
+                    {
+                        GetComponent<MeshRenderer>().material = detectSpotlight;
+                        light.color = detectSpotlight.color;
+                        camRot.detected = true;
+                        GameObject closestEnemy = FindClosestEnemy(hit);
+                        closestEnemy.GetComponent<Hunter>().MoveToCameraPos(hit.transform.position);
 
+                    }
+                    else
+                    {
+                        GetComponent<MeshRenderer>().material = noneSpotlightLight;
+                        light.color = noneSpotlightLight.color;
+                        camRot.detected = false;
+
+                    }
                 }
                 else
                 {
-                    Lens.GetComponentInParent<MeshRenderer>().material = none;
                     GetComponent<MeshRenderer>().material = noneSpotlightLight;
+                    light.color = noneSpotlightLight.color;
                     camRot.detected = false;
 
                 }
-            }
-            else
-            {
-                Lens.GetComponentInParent<MeshRenderer>().material = none;
-                GetComponent<MeshRenderer>().material = noneSpotlightLight;
-                camRot.detected = false;
-
             }
         }
     }
@@ -83,8 +89,8 @@ public class Detection : MonoBehaviour
     {
         if (col.gameObject.tag == "Player")
         {
-            Lens.GetComponentInParent<MeshRenderer>().material = none;
             GetComponent<MeshRenderer>().material = noneSpotlightLight;
+            light.color = noneSpotlightLight.color;
             camRot.detected = false;
         }
     }
