@@ -37,6 +37,7 @@ public class camRotation : MonoBehaviour
         Debug.Log(startRotation.y);
         endRotation = Quaternion.Euler(Vector3.up * -yaw);
         targetRotation = endRotation;
+        Debug.Log(gameObject.name);
 /*        SetUpStartRotation();
 */    }
     private void Update()
