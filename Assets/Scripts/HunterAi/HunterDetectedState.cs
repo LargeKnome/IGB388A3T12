@@ -12,7 +12,7 @@ public class HunterDetectedState : BaseState
     public override void Enter()
     {
         base.Enter();
-        hunter.agent.destination = hunter.transform.position;
+        hunter.agent.enabled = false;
         hunter.GetComponent<FieldOfView>().DetectingPlayer();
     }
 

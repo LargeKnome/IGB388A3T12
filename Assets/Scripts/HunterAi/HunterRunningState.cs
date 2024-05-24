@@ -11,6 +11,7 @@ public class HunterRunningState : BaseState
     public override void Enter()
     {
         base.Enter();
+        hunter.agent.enabled = true;
         hunter.agent.destination = hunter.player.transform.position;
     }
 
@@ -18,6 +19,7 @@ public class HunterRunningState : BaseState
     {
         base.Exit();
         hunter.GetComponent<FieldOfView>().playerDetected = false;
+        stateMachine.ChangeState(hunter.idleState);
     }
 
     public override void UpdateLogic()
