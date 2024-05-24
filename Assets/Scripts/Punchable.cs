@@ -19,17 +19,14 @@ public class Punchable : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter(Collision other)
+    private void OnTriggerEnter(Collider other)
     {
         //Debug.Log(other.gameObject.name);
         if (other.gameObject.CompareTag("Hand") || other.gameObject.CompareTag("Throwable"))
         {
             //Debug.Log("Collide");
             Rigidbody otherRB = other.gameObject.GetComponent<Rigidbody>();
-            if (other.relativeVelocity.magnitude > 1)
-            {
-                onCollide.Invoke();
-            }
+            onCollide.Invoke();
         }
     }
 }
