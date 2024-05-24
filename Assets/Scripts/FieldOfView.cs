@@ -26,6 +26,7 @@ public class FieldOfView : MonoBehaviour
 
     public int resolution = 50;     // Number of points used to draw the FOV
 
+    public float detectionTime = 2.5f;
 
     private Mesh mesh;
 
@@ -120,7 +121,7 @@ public class FieldOfView : MonoBehaviour
     private IEnumerator DetectPlayer()
     {
         float elaspedTime = 0f;
-        while (elaspedTime < 5f)
+        while (elaspedTime < detectionTime)
         {
             if (!canSeePlayer)
             {
