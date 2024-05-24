@@ -29,7 +29,7 @@ public class Detection : MonoBehaviour
     }
 
     // Update is called once per frame
-    void OnTriggerEnter(Collider col)
+    void OnTriggerStay(Collider col)
     {
         if (col.gameObject.tag == "Player")
         {

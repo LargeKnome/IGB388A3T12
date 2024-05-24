@@ -19,6 +19,7 @@ public class HunterDetectedState : BaseState
     public override void Exit()
     {
         base.Exit();
+        hunter.agent.enabled = true;
     }
 
     public override void UpdateLogic()

@@ -34,6 +34,8 @@ public class FieldOfView : MonoBehaviour
 
     public Material NotDetected;
     public Material Detected;
+
+    public float RadiusAround = 3f;
         
     private void Start()
     {
@@ -65,6 +67,10 @@ public class FieldOfView : MonoBehaviour
             GetComponent<EnemyMovement>().MoveTo();
         }*/
     }
+    private void CreateRadius()
+    {
+        
+    }
     private IEnumerator FOVRoutine()
     {
         float delay = 0.2f;
@@ -77,28 +83,38 @@ public class FieldOfView : MonoBehaviour
     }
     private void FieldOfViewCheck()
     {
+        Collider[] smallRadius = Physics.OverlapSphere(transform.position, RadiusAround, targetMask);
         Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radius, targetMask);
 
-        if (rangeChecks.Length != 0 )
+        if (smallRadius.Length != 0)
         {
-            Transform target = rangeChecks[0].transform;
-            Vector3 directionToTarget = (target.position - transform.position).normalized;
+            CanSee(smallRadius);
+        }
+        else if (rangeChecks.Length != 0 )
+        {
+            CanSee(rangeChecks);
+        }
+        else if (canSeePlayer)
+        {
+            detection.GetComponent<MeshRenderer>().material = NotDetected; 
+            canSeePlayer = false;
+        }
+    }
+    private void CanSee(Collider[] rangeChecks)
+    {
+        Transform target = rangeChecks[0].transform;
+        Vector3 directionToTarget = (target.position - transform.position).normalized;
 
-            if(Vector3.Angle(transform.forward, directionToTarget) < angle / 2)
+        if (Vector3.Angle(transform.forward, directionToTarget) < angle / 2)
+        {
+            float distanceToTarget = Vector3.Distance(transform.position, target.position);
+
+            if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstructionMask))
             {
-                float distanceToTarget = Vector3.Distance(transform.position, target.position);
-
-                if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstructionMask))
-                {
-                    detection.GetComponent<MeshRenderer>().material = Detected;
-                    canSeePlayer = true;
-/*                    GetComponent<EnemyMovement>().camAlert = false;
-*/                }
-                else
-                {
-                    detection.GetComponent<MeshRenderer>().material = NotDetected;
-                    canSeePlayer = false;
-                }
+                detection.GetComponent<MeshRenderer>().material = Detected;
+                canSeePlayer = true;
+                /*                    GetComponent<EnemyMovement>().camAlert = false;
+                */
             }
             else
             {
@@ -106,9 +122,9 @@ public class FieldOfView : MonoBehaviour
                 canSeePlayer = false;
             }
         }
-        else if (canSeePlayer)
+        else
         {
-            detection.GetComponent<MeshRenderer>().material = NotDetected; 
+            detection.GetComponent<MeshRenderer>().material = NotDetected;
             canSeePlayer = false;
         }
     }
