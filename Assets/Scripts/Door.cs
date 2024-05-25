@@ -16,7 +16,7 @@ public class Door : MonoBehaviour
     {
         if (doorHandle.CurrentValue <= 0.3f)
         {
-            Debug.Log("Open yoooo");
+            //Debug.Log("Open yoooo");
         }
     }
 }

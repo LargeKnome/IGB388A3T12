@@ -61,7 +61,6 @@ public class DiegeticRotator : MonoBehaviour
     [Tooltip("Called when the user sops grabbing the object to rotate it.")]
     public UnityEvent onGrabFinished;
 
-
     // Cache a reference to the grabbable.
     public OVRGrabbableExtended grabbable;
 
@@ -127,6 +126,7 @@ public class DiegeticRotator : MonoBehaviour
         CurrentValue = initialValue;
         onValueChanged.Invoke(CurrentValue);
         ResetGrabbableTransform();
+        
     }
 
     /// <summary>
@@ -144,6 +144,7 @@ public class DiegeticRotator : MonoBehaviour
             if (rotationAxis == RotationAxis.ZAxis) normal = transform.forward;
             Plane plane = new Plane(normal, rotatablePart.position);
             Vector3 point = plane.ClosestPointOnPlane(grabbable.transform.position);
+            
 
             // Find the aligned vector used to calculate angles.
             Vector3 diff = transform.InverseTransformPoint(point) - 
@@ -157,11 +158,14 @@ public class DiegeticRotator : MonoBehaviour
                 degs = Mathf.Atan2(diff.x, diff.z) * Mathf.Rad2Deg;
             else if (rotationAxis == RotationAxis.ZAxis)
                 degs = -Mathf.Atan2(diff.x, diff.y) * Mathf.Rad2Deg;
-
+            
             // Clamp the final angle to the needed bounds.
+            
             while (degs < 0) degs += 360;
             while (degs > 360) degs -= 360;
             float newDesiredDegrees = Mathf.Clamp(degs, minimumAngle, maximumAngle);
+            
+            
             if (Mathf.Abs(newDesiredDegrees - desiredDegrees) < 20.0f)
             {
                 desiredDegrees = newDesiredDegrees;
@@ -169,10 +173,15 @@ public class DiegeticRotator : MonoBehaviour
 
             // Update the value on the rotator.
             float ratio = (desiredDegrees - minimumAngle) / (maximumAngle - minimumAngle);
+            
+            
             CurrentValue = minimumValue + ratio * (maximumValue - minimumValue);
-
-            if (Vector3.Distance(grabbable.transform.position, grabbableResetPoint.transform.position) > 
-                maximumDistanceBeforeForcedDrop) grabbable.grabbedBy.ForceRelease(grabbable);
+            
+            if (Vector3.Distance(grabbable.transform.position, grabbableResetPoint.transform.position) >
+                maximumDistanceBeforeForcedDrop)
+            {
+                grabbable.grabbedBy.ForceRelease(grabbable);
+            }
         }
 
         Quaternion targetRotation = Quaternion.Euler(
