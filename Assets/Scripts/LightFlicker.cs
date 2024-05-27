@@ -8,7 +8,11 @@ public class LightFlicker : MonoBehaviour
     public bool isFlickering = false;
     public float timeDelay;
     Light myLight;
-
+    public float lightIntensity = 1;
+    public float firstDelayRange1 = 0.01f;
+    public float firstDelayRange2 = 2.0f;
+    public float secondDelayRange1 = 0.01f;
+    public float secondDelayRange2 = 0.5f;
     void Start()
     {
         myLight = this.gameObject.GetComponent<Light>();
@@ -27,11 +31,11 @@ public class LightFlicker : MonoBehaviour
     {
         isFlickering = true;
         myLight.enabled = false;
-        myLight.intensity = Mathf.PingPong(Time.time, 1);
-        timeDelay = Random.Range(0.01f, 2f);
+        myLight.intensity = Mathf.PingPong(Time.time, lightIntensity);
+        timeDelay = Random.Range(firstDelayRange1, firstDelayRange2);
         yield return new WaitForSeconds(timeDelay);
         myLight.enabled = true;
-        timeDelay = Random.Range(0.01f, 0.5f);
+        timeDelay = Random.Range(secondDelayRange1, secondDelayRange2);
         yield return new WaitForSeconds(timeDelay);
         isFlickering = false;
     }
