@@ -126,7 +126,6 @@ public class DiegeticRotator : MonoBehaviour
         CurrentValue = initialValue;
         onValueChanged.Invoke(CurrentValue);
         ResetGrabbableTransform();
-        
     }
 
     /// <summary>
@@ -161,14 +160,17 @@ public class DiegeticRotator : MonoBehaviour
             
             // Clamp the final angle to the needed bounds.
             
+            
             while (degs < 0) degs += 360;
             while (degs > 360) degs -= 360;
             float newDesiredDegrees = Mathf.Clamp(degs, minimumAngle, maximumAngle);
             
+            Debug.Log("New Degrees: " + newDesiredDegrees + ", Old Degrees: " + desiredDegrees + ", Offset: " + (newDesiredDegrees - desiredDegrees) + ", Raw Degrees: " + degs);
+            desiredDegrees = newDesiredDegrees;
             
             if (Mathf.Abs(newDesiredDegrees - desiredDegrees) < 20.0f)
             {
-                desiredDegrees = newDesiredDegrees;
+                Debug.Log("Large Jump");
             }
 
             // Update the value on the rotator.
