@@ -16,6 +16,7 @@ public class TrainTrigger : MonoBehaviour
             parentTrain.Depart();
 
             gameObject.SetActive(false);
+            MySceneManager.i.ChangeSceneLong("WinScene");
         }
     }
 }
