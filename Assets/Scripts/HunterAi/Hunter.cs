@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 public class Hunter : MonoBehaviour
 {
@@ -89,9 +90,9 @@ public class Hunter : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.CompareTag("Player"))
         {
-            FindObjectOfType<GameManager>().GetComponent<SceneLoader>().Load("LoseScene");
+            MySceneManager.i.ChangeSceneLong("WinScene");
         }
     }
     public void Looking()
