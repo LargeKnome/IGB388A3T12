@@ -11,9 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/TomStuff/WinScene.unity
     guid: 3428294b131a96843aa324b1380e9263
-  - enabled: 1
-    path: Assets/TomStuff/LoseScene.unity
-    guid: a720d3cbfe1c5fe43a42739782e64bd7
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 7d51d9b6748e5c645bee5c72b063900f, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: dcd3a6b311f84ff43b4b5b08d91ac191, type: 2}
