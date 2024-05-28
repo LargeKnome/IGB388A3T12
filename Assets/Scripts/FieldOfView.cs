@@ -40,7 +40,6 @@ public class FieldOfView : MonoBehaviour
     private void Start()
     {
         mesh = new Mesh();
-        Debug.Log(gameObject.name);
         detection.mesh = mesh;
 
 

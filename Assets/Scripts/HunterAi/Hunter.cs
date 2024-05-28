@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 public class Hunter : MonoBehaviour
 {
@@ -40,6 +41,12 @@ public class Hunter : MonoBehaviour
     private Quaternion startRotation;
     private Quaternion endRotation;
     private Quaternion targetRotation;
+
+
+
+
+    // Create an instance of the UnityEvent
+    public UnityEvent onTriggerEnterEvent;
 
     // Start is called before the first frame update
     void Start()
@@ -83,7 +90,6 @@ public class Hunter : MonoBehaviour
     public void MoveToCameraPos(Vector3 CameraPos)
     {
         camAlert = true;
-        Debug.Log(CameraPos);
         CamAlertPos = CameraPos;
     }
 
@@ -91,7 +97,11 @@ public class Hunter : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            FindObjectOfType<GameManager>().GetComponent<SceneLoader>().Load("LoseScene");
+            if (onTriggerEnterEvent != null)
+            {
+                onTriggerEnterEvent.Invoke();
+
+            }
         }
     }
     public void Looking()

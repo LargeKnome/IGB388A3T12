@@ -1374,6 +1374,21 @@ MonoBehaviour:
   rotate: 60
   isSearching: 0
   searchingTime: 10
+  onTriggerEnterEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!195 &1164619079808170011
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1421,9 +1436,11 @@ MonoBehaviour:
   playerDetected: 0
   rayCount: 36
   resolution: 50
+  detectionTime: 2.5
   detection: {fileID: 1164619077843635773}
   NotDetected: {fileID: 2100000, guid: b68e7d9ca42c7a14b85751ca7412d2a9, type: 2}
   Detected: {fileID: 2100000, guid: 690c241aa4f4b484096bbeb0af9ba2a7, type: 2}
+  RadiusAround: 3
 --- !u!4 &1164619079808295553 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400006, guid: bfa4d9c17e25a8441abfb1e1b3c6ae47, type: 3}
