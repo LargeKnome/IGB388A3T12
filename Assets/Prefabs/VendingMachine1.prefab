@@ -295,6 +295,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e0b0c38ea279d049bf2eac16e9827ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minimumSpeed: 0.05
+  onPunchAudio:
+  - {fileID: 8300000, guid: 19573dcc8c61e3740941bcb402299f0f, type: 3}
+  - {fileID: 8300000, guid: e26fecdc17b7e7c4da5322a7399d7068, type: 3}
   onCollide:
     m_PersistentCalls:
       m_Calls:
