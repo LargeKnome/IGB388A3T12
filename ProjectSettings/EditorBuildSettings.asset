@@ -6,10 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/TrainStationLevel.unity
+    path: Assets/Scenes/TrainStationLevel.unity
     guid: a084af852f6b04846bb789b199e7ef39
   - enabled: 1
-    path: Assets/TomStuff/WinScene.unity
+    path: Assets/Scenes/WinScene.unity
     guid: 3428294b131a96843aa324b1380e9263
   - enabled: 0
     path: 

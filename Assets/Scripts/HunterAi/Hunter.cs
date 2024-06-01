@@ -92,7 +92,7 @@ public class Hunter : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            MySceneManager.i.ChangeSceneLong("WinScene");
+            GameManager.i.ChangeSceneLong("FinishScene");
         }
     }
     public void Looking()
