@@ -14,9 +14,8 @@ public class TrainTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             parentTrain.Depart();
-
             gameObject.SetActive(false);
-            GameManager.i.ChangeSceneLong("WinScene");
+            LevelManager.i.EndLevel(true);
         }
     }
 }

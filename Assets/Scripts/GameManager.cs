@@ -1,23 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager i;
     [SerializeField] private OVRScreenFade screenFade;
+    [NonSerialized] public float gameTime = 0;
 
-    private float gameTime;
-    private string gameTimeStr;
-    private bool tickTimer;
-
-    public enum GameStates
-    {
-        Menu,
-        Game
-    }
-
-    public GameStates gameState;
+    [NonSerialized] public bool gameWon = true;
 
     void Awake()
     {
@@ -33,30 +26,13 @@ public class GameManager : MonoBehaviour
         
     }
 
-    public void Start()
-    {
-        CalcSeconds(578);
-    }
-
-    public void StartGame()
-    {
-        ChangeSceneLong("TrainStationScene");
-        gameState = GameStates.Game;
-    }
-
-    public void EndGame()
-    {
-        ChangeSceneLong("WinScene");
-        tickTimer = false;
-    }
-
-    public void CalcSeconds(int time)
+    public string CalcSeconds(float time)
     {
         int gameTimeInt = Mathf.FloorToInt(time);
-        gameTimeStr = Mathf.FloorToInt(gameTimeInt / 60).ToString("D2") + ": " + (gameTimeInt % 60).ToString("D2");
-        Debug.Log(gameTimeStr);
+        string gameTimeStr = Mathf.FloorToInt(gameTimeInt / 60).ToString("D2") + ": " + (gameTimeInt % 60).ToString("D2");
+        return gameTimeStr;
     }
-
+    
     public void ChangeSceneLong(string sceneName)
     {
         StartCoroutine(LongSceneTransition(sceneName, 3));
@@ -80,7 +56,6 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         
         screenFade.SetUIFade(0);
-        
-        UnityEngine.SceneManagement.SceneManager.LoadScene(name);
+        SceneManager.LoadScene(name);
     }
 }
