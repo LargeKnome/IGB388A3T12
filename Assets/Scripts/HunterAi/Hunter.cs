@@ -85,7 +85,6 @@ public class Hunter : MonoBehaviour
     public void MoveToCameraPos(Vector3 CameraPos)
     {
         camAlert = true;
-        Debug.Log(CameraPos);
         CamAlertPos = CameraPos;
     }
 

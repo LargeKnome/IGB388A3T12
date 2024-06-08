@@ -87,7 +87,8 @@ public class FieldOfView : MonoBehaviour
 
         if (smallRadius.Length != 0)
         {
-            CanSee(smallRadius);
+            detection.GetComponent<MeshRenderer>().material = Detected;
+            canSeePlayer = true;
         }
         else if (rangeChecks.Length != 0 )
         {

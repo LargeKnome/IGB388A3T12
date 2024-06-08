@@ -34,10 +34,8 @@ public class camRotation : MonoBehaviour
         camRot = cam.rotation;
         cam.localRotation = Quaternion.AngleAxis(pitch, Vector3.right);
         startRotation = Quaternion.Euler(Vector3.up * yaw);
-        Debug.Log(startRotation.y);
         endRotation = Quaternion.Euler(Vector3.up * -yaw);
         targetRotation = endRotation;
-        Debug.Log(gameObject.name);
 /*        SetUpStartRotation();
 */    }
     private void Update()
