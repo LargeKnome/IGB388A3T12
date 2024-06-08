@@ -1,6 +1,7 @@
 using Oculus.Interaction.Samples;
 using System.Collections;
 using System.Collections.Generic;
+using Oculus.Interaction;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
@@ -92,7 +93,7 @@ public class Hunter : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            GameManager.i.ChangeSceneLong("FinishScene");
+            LevelManager.i.EndLevel(false);
         }
     }
     public void Looking()
