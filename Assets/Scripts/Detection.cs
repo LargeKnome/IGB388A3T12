@@ -48,7 +48,7 @@ public class Detection : MonoBehaviour
         {
             RaycastHit hit;
 
-            Vector3 directionToTarget = (col.transform.position - Lens.transform.position).normalized;
+            Vector3 directionToTarget = (player.transform.position - Lens.transform.position).normalized;
             if (!Physics.Raycast(Lens.transform.position, directionToTarget, out hit, distance, obstruction))
             {
                 if (Physics.Raycast(Lens.transform.position, directionToTarget, out hit, 1000, detection))

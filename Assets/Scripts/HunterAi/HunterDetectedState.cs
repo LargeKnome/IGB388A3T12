@@ -27,7 +27,7 @@ public class HunterDetectedState : BaseState
     {
         base.UpdateLogic();
         var targetRotation = Quaternion.LookRotation(hunter.player.transform.position - hunter.transform.position);
-        targetRotation.y = hunter.transform.rotation.y;
+        targetRotation.x = 0;
         // Smoothly rotate towards the target point.
         hunter.transform.rotation = Quaternion.Slerp(hunter.transform.rotation, targetRotation, 5 * Time.deltaTime);
         if (hunter.GetComponent<FieldOfView>().playerDetected)

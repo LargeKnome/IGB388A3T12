@@ -101,7 +101,7 @@ public class FieldOfView : MonoBehaviour
     }
     private void CanSee(Collider[] rangeChecks)
     {
-        Transform target = rangeChecks[0].transform;
+        Transform target = playerRef.transform;
         Vector3 directionToTarget = (target.position - transform.position).normalized;
 
         if (Vector3.Angle(transform.forward, directionToTarget) < angle / 2)
@@ -112,8 +112,6 @@ public class FieldOfView : MonoBehaviour
             {
                 detection.GetComponent<MeshRenderer>().material = Detected;
                 canSeePlayer = true;
-                /*                    GetComponent<EnemyMovement>().camAlert = false;
-                */
             }
             else
             {
