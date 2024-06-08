@@ -36,6 +36,8 @@ public class FieldOfView : MonoBehaviour
     public Material Detected;
 
     public float RadiusAround = 3f;
+
+    public GameObject SpotLight;
         
     private void Start()
     {
@@ -47,6 +49,7 @@ public class FieldOfView : MonoBehaviour
         StartCoroutine(FOVRoutine());
         agent = GetComponent<NavMeshAgent>();
         hunterOrigin = transform.position;
+        SpotLight.GetComponent<Light>().color = NotDetected.color;
 
     }
     private void Update()
@@ -87,7 +90,7 @@ public class FieldOfView : MonoBehaviour
 
         if (smallRadius.Length != 0)
         {
-            detection.GetComponent<MeshRenderer>().material = Detected;
+            SpotLight.GetComponent<Light>().color = Detected.color;
             canSeePlayer = true;
         }
         else if (rangeChecks.Length != 0 )
@@ -96,7 +99,7 @@ public class FieldOfView : MonoBehaviour
         }
         else if (canSeePlayer)
         {
-            detection.GetComponent<MeshRenderer>().material = NotDetected; 
+            SpotLight.GetComponent<Light>().color = NotDetected.color;
             canSeePlayer = false;
         }
     }
@@ -111,18 +114,18 @@ public class FieldOfView : MonoBehaviour
 
             if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstructionMask))
             {
-                detection.GetComponent<MeshRenderer>().material = Detected;
+                SpotLight.GetComponent<Light>().color = Detected.color;
                 canSeePlayer = true;
             }
             else
             {
-                detection.GetComponent<MeshRenderer>().material = NotDetected;
+                SpotLight.GetComponent<Light>().color = NotDetected.color;
                 canSeePlayer = false;
             }
         }
         else
         {
-            detection.GetComponent<MeshRenderer>().material = NotDetected;
+            SpotLight.GetComponent<Light>().color = NotDetected.color;
             canSeePlayer = false;
         }
     }
