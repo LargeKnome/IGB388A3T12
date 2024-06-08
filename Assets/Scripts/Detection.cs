@@ -49,26 +49,26 @@ public class Detection : MonoBehaviour
             RaycastHit hit;
 
             Vector3 directionToTarget = (player.transform.position - Lens.transform.position).normalized;
-            if (!Physics.Raycast(Lens.transform.position, directionToTarget, out hit, distance, obstruction))
+            Debug.DrawRay(Lens.transform.position, directionToTarget * distance, Color.red); // Draw the ray
+            if (Physics.Raycast(Lens.transform.position, directionToTarget, out hit, distance, obstruction))
             {
-                if (Physics.Raycast(Lens.transform.position, directionToTarget, out hit, 1000, detection))
+                GetComponent<MeshRenderer>().material = noneSpotlightLight;
+                light.color = noneSpotlightLight.color;
+                camRot.detected = false;
+            }
+            else if (Physics.Raycast(Lens.transform.position, directionToTarget, out hit, distance, detection))
+            {
+                if (hit.collider.tag == "Player")
                 {
-                    if (hit.collider.tag == "Player")
+                    GetComponent<MeshRenderer>().material = detectSpotlight;
+                    light.color = detectSpotlight.color;
+                    camRot.detected = true;
+                    GameObject closestEnemy = FindClosestEnemy(hit);
+                    if (closestEnemy != null)
                     {
-                        GetComponent<MeshRenderer>().material = detectSpotlight;
-                        light.color = detectSpotlight.color;
-                        camRot.detected = true;
-                        GameObject closestEnemy = FindClosestEnemy(hit);
                         closestEnemy.GetComponent<Hunter>().MoveToCameraPos(hit.transform.position);
-
                     }
-                    else
-                    {
-                        GetComponent<MeshRenderer>().material = noneSpotlightLight;
-                        light.color = noneSpotlightLight.color;
-                        camRot.detected = false;
 
-                    }
                 }
                 else
                 {
