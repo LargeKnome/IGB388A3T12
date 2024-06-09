@@ -17,6 +17,7 @@ public class LevelManager : MonoBehaviour
         if (i == null)
         {
             i = this;
+            DontDestroyOnLoad(this.gameObject);
         }
         else
         {

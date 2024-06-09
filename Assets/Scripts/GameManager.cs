@@ -25,7 +25,10 @@ public class GameManager : MonoBehaviour
         }
         
     }
-
+    public void Start()
+    {
+        screenFade = FindObjectOfType<OVRScreenFade>();
+    }
     public string CalcSeconds(float time)
     {
         int gameTimeInt = Mathf.FloorToInt(time);
