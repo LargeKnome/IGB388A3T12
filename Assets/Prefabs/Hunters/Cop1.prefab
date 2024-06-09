@@ -1481,6 +1481,8 @@ MonoBehaviour:
   rotate: 60
   isSearching: 0
   searchingTime: 10
+  walkSpeed: 2
+  runSpeed: 3.5
 --- !u!195 &1164619079808170011
 NavMeshAgent:
   m_ObjectHideFlags: 0

@@ -12,6 +12,7 @@ public class HunterRunningState : BaseState
     {
         base.Enter();
         hunter.agent.enabled = true;
+        hunter.agent.speed = hunter.runSpeed;
     }
 
     public override void Exit()

@@ -353,6 +353,8 @@ MonoBehaviour:
   rotate: 60
   isSearching: 0
   searchingTime: 10
+  walkSpeed: 2
+  runSpeed: 3.5
 --- !u!114 &5255646154119426509
 MonoBehaviour:
   m_ObjectHideFlags: 0

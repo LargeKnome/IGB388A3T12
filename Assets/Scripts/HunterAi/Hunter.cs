@@ -43,6 +43,8 @@ public class Hunter : MonoBehaviour
     private Quaternion endRotation;
     private Quaternion targetRotation;
 
+    public float walkSpeed;
+    public float runSpeed;
     // Start is called before the first frame update
     void Start()
     {

@@ -411,3 +411,5 @@ MonoBehaviour:
   rotate: 60
   isSearching: 0
   searchingTime: 10
+  walkSpeed: 2
+  runSpeed: 3.5

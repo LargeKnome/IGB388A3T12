@@ -14,6 +14,7 @@ public class HunterWalkingState : BaseState
     public override void Enter()
     {
         base.Enter();
+        hunter.agent.speed = hunter.walkSpeed;
     }
 
     public override void Exit()
